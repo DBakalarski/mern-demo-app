@@ -7,8 +7,8 @@ import PostList from '../../components/PostList';
 import PostCreateWidget from '../../components/PostCreateWidget/PostCreateWidget';
 
 // Import Actions
-import { addPostRequest, fetchPosts, deletePostRequest } from '../../PostActions';
-import { toggleAddPost } from '../../../App/AppActions';
+import { addPostRequest, fetchPosts, deletePostRequest, thumbUpRequest, thumbDownRequest } from '../../PostActions';
+import { toggleAddPost, toggleThumbUp, toggleThumbDown } from '../../../App/AppActions';
 
 // Import Selectors
 import { getShowAddPost } from '../../../App/AppReducer';
@@ -30,11 +30,19 @@ class PostListPage extends Component {
     this.props.dispatch(addPostRequest({ name, title, content }));
   };
 
+  handleThumbUp = cuid => {
+      this.props.dispatch(thumbUpRequest(cuid));
+  }
+   handleThumbDown = cuid => {
+      this.props.dispatch(thumbDownRequest(cuid));
+  }
+
+
   render() {
     return (
       <div>
         <PostCreateWidget addPost={this.handleAddPost} showAddPost={this.props.showAddPost} />
-        <PostList handleDeletePost={this.handleDeletePost} posts={this.props.posts} />
+        <PostList handleDeletePost={this.handleDeletePost} posts={this.props.posts} handleThumbUp={this.handleThumbUp} handleThumbDown={this.handleThumbDown} />
       </div>
     );
   }
